@@ -18,10 +18,21 @@ end)
 RegisterNetEvent('esx:setJob')
 AddEventHandler('esx:setJob', function(job)
 	PlayerData.job = job
+    calls = {}
+    callnum = 0
+    totalcalls = 0
+    SendNUIMessage({
+        show = false;
+        content = "Sin alertas";
+        callnum = 0;
+        totalcalls = 0;
+        newalert = false;
+    })
+    showed = false
 end)
 
 RegisterCommand("showalerts", function()
-    if PlayerData.job and PlayerData.job.name == 'police' then
+    if PlayerData.job and PlayerData.job.name == 'police' or PlayerData.job.name == 'ambulance' then
         if not showed then
             SendNUIMessage({
                 show = true;
@@ -34,7 +45,7 @@ RegisterCommand("showalerts", function()
             showed = false
         end
     else
-        ESX.ShowNotification('No eres policia')
+        ESX.ShowNotification('No eres policia o médico')
     end
 end, false)
 
@@ -49,164 +60,188 @@ end)
 
 RegisterNetEvent("guille_dispatch:alertToClient")
 AddEventHandler("guille_dispatch:alertToClient", function(text, coords)
-    callnum = callnum + 1
-    totalcalls = totalcalls + 1
-    SendNUIMessage({
-        content = text;
-        callnum = callnum;
-        totalcalls = totalcalls;
-        newalert = true;
-    })
-    table.insert(calls, {text = text, coords = coords})
+    if PlayerData.job and PlayerData.job.name == 'police' then
+        callnum = callnum + 1
+        totalcalls = totalcalls + 1
+        SendNUIMessage({
+            content = text;
+            callnum = callnum;
+            totalcalls = totalcalls;
+            newalert = true;
+        })
+        table.insert(calls, {text = text, coords = coords})
+    end
 end)
 
 RegisterNetEvent("guille_dispatch:vehToClient")
 AddEventHandler("guille_dispatch:vehToClient", function(text, coords, model)
-    callnum = callnum + 1
-    totalcalls = totalcalls + 1
-    SendNUIMessage({
-        content = text;
-        callnum = callnum;
-        totalcalls = totalcalls;
-        pic = true;
-        model = model;
-        newalert = true;
+    if PlayerData.job and PlayerData.job.name == 'police' then
+        callnum = callnum + 1
+        totalcalls = totalcalls + 1
+        if Config.enableVehiclePics then
+            SendNUIMessage({
+                content = text;
+                callnum = callnum;
+                totalcalls = totalcalls;
+                pic = true;
+                model = model;
+                newalert = true;
 
-    })
-    table.insert(calls, {text = text, coords = coords, model = model})
+            })
+            table.insert(calls, {text = text, coords = coords, model = model})
+        else
+            SendNUIMessage({
+                content = text;
+                callnum = callnum;
+                totalcalls = totalcalls;
+                newalert = true;
+
+            })
+            table.insert(calls, {text = text, coords = coords})
+        end
+    end
 end)
 
 RegisterCommand("hola", function()
     TriggerEvent("guille_dispatch:baduToClient", "pacific")
 end, false)
 
+RegisterNetEvent("guille_dispatch:auxToClient")
+AddEventHandler("guille_dispatch:auxToClient", function(text, coords)
+
+end)
+
+
+
 RegisterNetEvent("guille_dispatch:robberyToClient")
-AddEventHandler("guille_dispatch:baduToClient", function(type, text, coords, model)
-    callnum = callnum + 1
-    totalcalls = totalcalls + 1
-    if Config.enableRobberyPics then
-        if type == "247" then
-            SendNUIMessage({
-                content = "Se ha disparado una alarma en un 24/7, porfavor acudan!";
-                callnum = callnum;
-                totalcalls = totalcalls;
-                pic = true;
-                model = 247;
-                newalert = true;
+AddEventHandler("guille_dispatch:robberyToClient", function(type, text, coords, model)
+    if PlayerData.job and PlayerData.job.name == 'police' then
+        callnum = callnum + 1
+        totalcalls = totalcalls + 1
+        if Config.enableRobberyPics then
+            if type == "247" then
+                SendNUIMessage({
+                    content = "Se ha disparado una alarma en un 24/7, porfavor acudan!";
+                    callnum = callnum;
+                    totalcalls = totalcalls;
+                    pic = true;
+                    model = 247;
+                    newalert = true;
 
-            })
-            table.insert(calls, {text = "Se ha disparado una alarma en un 24/7, porfavor acudan!", coords = coords, model = 247})
-        elseif type == "vangelico" then
-            SendNUIMessage({
-                content = "Se ha disparado una alarma en la joyería, porfavor acudan!";
-                callnum = callnum;
-                totalcalls = totalcalls;
-                pic = true;
-                model = "vangelico";
-                newalert = true;
+                })
+                table.insert(calls, {text = "Se ha disparado una alarma en un 24/7, porfavor acudan!", coords = coords, model = 247})
+            elseif type == "vangelico" then
+                SendNUIMessage({
+                    content = "Se ha disparado una alarma en la joyería, porfavor acudan!";
+                    callnum = callnum;
+                    totalcalls = totalcalls;
+                    pic = true;
+                    model = "vangelico";
+                    newalert = true;
 
-            })
-            table.insert(calls, {text = "Se ha disparado una alarma en la joyería, porfavor acudan!", coords = coords, model = "vangelico"})
-        elseif type == "ammunation" then
-            SendNUIMessage({
-                content = "Se ha disparado una alarma en un AmmuNation, porfavor acudan!";
-                callnum = callnum;
-                totalcalls = totalcalls;
-                pic = true;
-                model = "ammunation";
-                newalert = true;
+                })
+                table.insert(calls, {text = "Se ha disparado una alarma en la joyería, porfavor acudan!", coords = coords, model = "vangelico"})
+            elseif type == "ammunation" then
+                SendNUIMessage({
+                    content = "Se ha disparado una alarma en un AmmuNation, porfavor acudan!";
+                    callnum = callnum;
+                    totalcalls = totalcalls;
+                    pic = true;
+                    model = "ammunation";
+                    newalert = true;
 
-            })
-            table.insert(calls, {text = "Se ha disparado una alarma en un AmmuNation, porfavor acudan!", coords = coords, model = "ammunation"})
-        elseif type == "fleeca" then
-            SendNUIMessage({
-                content = "Se ha disparado una alarma en un Fleeca, porfavor acudan!";
-                callnum = callnum;
-                totalcalls = totalcalls;
-                pic = true;
-                model = "fleeca";
-                newalert = true;
+                })
+                table.insert(calls, {text = "Se ha disparado una alarma en un AmmuNation, porfavor acudan!", coords = coords, model = "ammunation"})
+            elseif type == "fleeca" then
+                SendNUIMessage({
+                    content = "Se ha disparado una alarma en un Fleeca, porfavor acudan!";
+                    callnum = callnum;
+                    totalcalls = totalcalls;
+                    pic = true;
+                    model = "fleeca";
+                    newalert = true;
 
-            })
-            table.insert(calls, {text = "Se ha disparado una alarma en un Fleeca, porfavor acudan!", coords = coords, model = "fleeca"})
-        elseif type == "humane" then
-            SendNUIMessage({
-                content = "Se ha disparado una alarma en los laboratorios Humane, porfavor acudan!";
-                callnum = callnum;
-                totalcalls = totalcalls;
-                pic = true;
-                model = "humane";
-                newalert = true;
+                })
+                table.insert(calls, {text = "Se ha disparado una alarma en un Fleeca, porfavor acudan!", coords = coords, model = "fleeca"})
+            elseif type == "humane" then
+                SendNUIMessage({
+                    content = "Se ha disparado una alarma en los laboratorios Humane, porfavor acudan!";
+                    callnum = callnum;
+                    totalcalls = totalcalls;
+                    pic = true;
+                    model = "humane";
+                    newalert = true;
 
-            })
-            table.insert(calls, {text = "Se ha disparado una alarma en los laboratorios Humane, porfavor acudan!", coords = coords, model = "humane"})
-        elseif type == "pacific" then
-            SendNUIMessage({
-                content = "Se ha disparado una alarma en el Pacific Standard, porfavor acudan!";
-                callnum = callnum;
-                totalcalls = totalcalls;
-                pic = true;
-                model = "pacific";
-                newalert = true;
+                })
+                table.insert(calls, {text = "Se ha disparado una alarma en los laboratorios Humane, porfavor acudan!", coords = coords, model = "humane"})
+            elseif type == "pacific" then
+                SendNUIMessage({
+                    content = "Se ha disparado una alarma en el Pacific Standard, porfavor acudan!";
+                    callnum = callnum;
+                    totalcalls = totalcalls;
+                    pic = true;
+                    model = "pacific";
+                    newalert = true;
 
-            })
-            table.insert(calls, {text = "Se ha disparado una alarma en el Pacific Standard, porfavor acudan!", coords = coords, model = "pacific"})
-        end
-    else
-        if type == "247" then
-            SendNUIMessage({
-                content = "Se ha disparado una alarma en un 24/7, porfavor acudan!";
-                callnum = callnum;
-                totalcalls = totalcalls;
-                newalert = true;
+                })
+                table.insert(calls, {text = "Se ha disparado una alarma en el Pacific Standard, porfavor acudan!", coords = coords, model = "pacific"})
+            end
+        else
+            if type == "247" then
+                SendNUIMessage({
+                    content = "Se ha disparado una alarma en un 24/7, porfavor acudan!";
+                    callnum = callnum;
+                    totalcalls = totalcalls;
+                    newalert = true;
 
-            })
-            table.insert(calls, {text = "Se ha disparado una alarma en un 24/7, porfavor acudan!", coords = coords})
-        elseif type == "vangelico" then
-            SendNUIMessage({
-                content = "Se ha disparado una alarma en la joyería, porfavor acudan!";
-                callnum = callnum;
-                totalcalls = totalcalls;
-                newalert = true;
+                })
+                table.insert(calls, {text = "Se ha disparado una alarma en un 24/7, porfavor acudan!", coords = coords})
+            elseif type == "vangelico" then
+                SendNUIMessage({
+                    content = "Se ha disparado una alarma en la joyería, porfavor acudan!";
+                    callnum = callnum;
+                    totalcalls = totalcalls;
+                    newalert = true;
 
-            })
-            table.insert(calls, {text = "Se ha disparado una alarma en la joyería, porfavor acudan!", coords = coords})
-        elseif type == "ammunation" then
-            SendNUIMessage({
-                content = "Se ha disparado una alarma en un AmmuNation, porfavor acudan!";
-                callnum = callnum;
-                totalcalls = totalcalls;
-                newalert = true;
+                })
+                table.insert(calls, {text = "Se ha disparado una alarma en la joyería, porfavor acudan!", coords = coords})
+            elseif type == "ammunation" then
+                SendNUIMessage({
+                    content = "Se ha disparado una alarma en un AmmuNation, porfavor acudan!";
+                    callnum = callnum;
+                    totalcalls = totalcalls;
+                    newalert = true;
 
-            })
-            table.insert(calls, {text = "Se ha disparado una alarma en un AmmuNation, porfavor acudan!", coords = coords})
-        elseif type == "fleeca" then
-            SendNUIMessage({
-                content = "Se ha disparado una alarma en un Fleeca, porfavor acudan!";
-                callnum = callnum;
-                totalcalls = totalcalls;
-                newalert = true;
+                })
+                table.insert(calls, {text = "Se ha disparado una alarma en un AmmuNation, porfavor acudan!", coords = coords})
+            elseif type == "fleeca" then
+                SendNUIMessage({
+                    content = "Se ha disparado una alarma en un Fleeca, porfavor acudan!";
+                    callnum = callnum;
+                    totalcalls = totalcalls;
+                    newalert = true;
 
-            })
-            table.insert(calls, {text = "Se ha disparado una alarma en un Fleeca, porfavor acudan!", coords = coords})
-        elseif type == "humane" then
-            SendNUIMessage({
-                content = "Se ha disparado una alarma en los laboratorios Humane, porfavor acudan!";
-                callnum = callnum;
-                totalcalls = totalcalls;
-                newalert = true;
+                })
+                table.insert(calls, {text = "Se ha disparado una alarma en un Fleeca, porfavor acudan!", coords = coords})
+            elseif type == "humane" then
+                SendNUIMessage({
+                    content = "Se ha disparado una alarma en los laboratorios Humane, porfavor acudan!";
+                    callnum = callnum;
+                    totalcalls = totalcalls;
+                    newalert = true;
 
-            })
-            table.insert(calls, {text = "Se ha disparado una alarma en los laboratorios Humane, porfavor acudan!", coords = coords})
-        elseif type == "pacific" then
-            SendNUIMessage({
-                content = "Se ha disparado una alarma en el Pacific Standard, porfavor acudan!";
-                callnum = callnum;
-                totalcalls = totalcalls;
-                newalert = true;
+                })
+                table.insert(calls, {text = "Se ha disparado una alarma en los laboratorios Humane, porfavor acudan!", coords = coords})
+            elseif type == "pacific" then
+                SendNUIMessage({
+                    content = "Se ha disparado una alarma en el Pacific Standard, porfavor acudan!";
+                    callnum = callnum;
+                    totalcalls = totalcalls;
+                    newalert = true;
 
-            })
-            table.insert(calls, {text = "Se ha disparado una alarma en el Pacific Standard, porfavor acudan!", coords = coords})
+                })
+                table.insert(calls, {text = "Se ha disparado una alarma en el Pacific Standard, porfavor acudan!", coords = coords})
+            end
         end
     end
 end)
@@ -284,7 +319,6 @@ RegisterCommand("mover", function(source, args)
 end, false)
 
 RegisterCommand("acceptentorno", function(source, args)
-    --print("hol")
     if callnum ~= 0 then
         SetNewWaypoint(calls[callnum]['coords'])
         ESX.ShowNotification('Se ha marcado la posición en tu ~r~GPS')
@@ -336,6 +370,7 @@ RegisterNUICallback("exit", function()
 end)
 
 function checkTable(table)
+    local init = false
     for k,v in pairs(calls) do
         inIt = true
     end
