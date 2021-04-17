@@ -131,6 +131,66 @@ $(function(){
                 $pic.removeClass('alert-contrast');
             },2000);
         }
+        if (event.data.newambualert) {
+            console.log("wtf")
+            var $av = $(".t-frame-sup-border");
+            var $text1 = $(".callnum");
+            var $text2 = $(".cust-text");
+            var $text3 = $(".num");
+            var $pic = $(".infsvg");
+            $av.addClass('ambualert');
+            $text1.addClass('alert-contrast');
+            $text2.addClass('alert-contrast');
+            $text3.addClass('alert-contrast');
+            $pic.addClass('alert-contrast');
+            setTimeout(function() {
+                $av.removeClass('ambualert');
+                $text1.removeClass('alert-contrast');
+                $text2.removeClass('alert-contrast');
+                $text3.removeClass('alert-contrast');
+                $pic.removeClass('alert-contrast');
+            },2000);
+        }
+        if (event.data.newmecaalert) {
+            console.log("wtf")
+            var $av = $(".t-frame-sup-border");
+            var $text1 = $(".callnum");
+            var $text2 = $(".cust-text");
+            var $text3 = $(".num");
+            var $pic = $(".infsvg");
+            $av.addClass('mecaalert');
+            $text1.addClass('alert-contrast');
+            $text2.addClass('alert-contrast');
+            $text3.addClass('alert-contrast');
+            $pic.addClass('alert-contrast');
+            setTimeout(function() {
+                $av.removeClass('mecaalert');
+                $text1.removeClass('alert-contrast');
+                $text2.removeClass('alert-contrast');
+                $text3.removeClass('alert-contrast');
+                $pic.removeClass('alert-contrast');
+            },2000);
+        }
+        if (event.data.newtaxialert) {
+            console.log("wtf")
+            var $av = $(".t-frame-sup-border");
+            var $text1 = $(".callnum");
+            var $text2 = $(".cust-text");
+            var $text3 = $(".num");
+            var $pic = $(".infsvg");
+            $av.addClass('taxialert');
+            $text1.addClass('alert-contrast');
+            $text2.addClass('alert-contrast');
+            $text3.addClass('alert-contrast');
+            $pic.addClass('alert-contrast');
+            setTimeout(function() {
+                $av.removeClass('taxialert');
+                $text1.removeClass('alert-contrast');
+                $text2.removeClass('alert-contrast');
+                $text3.removeClass('alert-contrast');
+                $pic.removeClass('alert-contrast');
+            },2000);
+        }
         var $sup = $(".t-frame-sup-border");
         var $inf = $(".t-frame-inf-border");
         if (event.data.inConfig == true) {

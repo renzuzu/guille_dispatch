@@ -4,6 +4,16 @@ local totalcalls = 0
 local config = false
 local showed = false
 local PlayerData = {}
+local leescupienlacaraledijelargateperraquetedenyoulocomanlaputamequeriarobarlachainnoesbromaporesodoyporculoalaschapiadoresfuckkhahkasfuckchapiadoresnoquierotuculozorraquetejodan = "crabgay"
+local ifyousawwhatIdidthatdayinBrookmillParkyoudstayathomeIbackedmybladeandgrabbedhisneckIsplashedhimdownIfelthisbones = "crabgay"
+local ChopabulletonyourbrainonyourchestNiggasbeefinonthatInternetshitWhentheyseemeniggasshowmerespectSivasconpussiesteconviertesengay = "crabgay"
+local salgoalacalleunpococolocaoelninodepequenoamorlehafaltaosalgoconunflowqueatunovialeagustaoaminomesaludessinotehesaludao = "crabgay"
+local MeescuchanenlallecaymishermanodelmoduloMihermanodiceDonttalktoomuchnohayquehablarmuchosocioSicojoatuholarevientocabronlepartoelculoendoLosmenorebuscandosucuartosololepidenfeaDios = "crabgay"
+local bigrambomesudalapollaeltamanodeljambonomeestesfronteandositepilloconlacadenatelarobamosnotiransolofueronallidefrenteperoqueriaquesisinorespetansoymarroquitusoloeresunfalsomagrevibigrambomesudalapollaeltamanodeljambofuckpxrgvngboy = "eyoulokomanlaputamequerarobarlachain"
+local nofacenocaseperodequeteescondessitueresunmaricon = {}
+local tejuroquesolocaigounaveztejuroqueyaaprendilaleccion = {}
+local scriptnigg = "Así que dile, dile que tenemo' uno' mile' Y si no me cree', pregunta cuanto' gramo' le compramo' al dealer Empaca, ve y dile Que andamo' con lo' winner' quemando kushin Dentro 'el area metro, no hay quien lo asimile Así que dile, dile que tenemo' uno' mile' Y si no me cree', pregunta cuanto' gramo' le compramo' al dealer Empaca, ve y dile Que andamo' con lo' winner' quemando kushin Dentro 'el area metro, no hay quien lo asimile"
+
 
 ESX = nil 
 
@@ -32,7 +42,7 @@ AddEventHandler('esx:setJob', function(job)
 end)
 
 RegisterCommand("showalerts", function()
-    if PlayerData.job and PlayerData.job.name == 'police' or PlayerData.job.name == 'ambulance' then
+    if PlayerData.job and PlayerData.job.name == 'police' or PlayerData.job.name == 'ambulance' or PlayerData.job.name == 'mechanic' or PlayerData.job.name == 'taxi' then
         if not showed then
             SendNUIMessage({
                 show = true;
@@ -45,7 +55,7 @@ RegisterCommand("showalerts", function()
             showed = false
         end
     else
-        ESX.ShowNotification('No eres policia o médico')
+        ESX.ShowNotification('Tu trabajo no necesita central de alertas')
     end
 end, false)
 
@@ -103,19 +113,80 @@ AddEventHandler("guille_dispatch:vehToClient", function(text, coords, model)
 end)
 
 RegisterCommand("hola", function()
-    TriggerEvent("guille_dispatch:baduToClient", "pacific")
+    TriggerEvent("guille_dispatch:robberyToClient", "pacific")
+end, false)
+
+RegisterCommand("auxilio", function(source, args)
+    local text = table.concat(args, " ")
+    local coords = GetEntityCoords(PlayerPedId())
+    TriggerServerEvent("guille_dispatch:sendAmbuAlert", text, coords)
+end, false)
+
+RegisterCommand("meca", function(source, args)
+    local text = table.concat(args, " ")
+    local coords = GetEntityCoords(PlayerPedId())
+    TriggerServerEvent("guille_dispatch:sendMecaAlert", text, coords)
+end, false)
+
+RegisterCommand("taxi", function(source, args)
+    local text = table.concat(args, " ")
+    local coords = GetEntityCoords(PlayerPedId())
+    TriggerServerEvent("guille_dispatch:sendTaxiaAlert", text, coords)
 end, false)
 
 RegisterNetEvent("guille_dispatch:auxToClient")
 AddEventHandler("guille_dispatch:auxToClient", function(text, coords)
-
+    if PlayerData.job and PlayerData.job.name == 'ambulance' then
+        callnum = callnum + 1
+        totalcalls = totalcalls + 1
+        SendNUIMessage({
+            content = text;
+            callnum = callnum;
+            totalcalls = totalcalls;
+            newambualert = true;
+        })
+        table.insert(calls, {text = text, coords = coords})
+    end
+    
+end)
+RegisterNetEvent("guille_dispatch:taxiToClient")
+AddEventHandler("guille_dispatch:taxiToClient", function(text, coords)
+    if PlayerData.job and PlayerData.job.name == 'taxi' then
+        callnum = callnum + 1
+        totalcalls = totalcalls + 1
+        SendNUIMessage({
+            content = text;
+            callnum = callnum;
+            totalcalls = totalcalls;
+            newtaxialert = true;
+        })
+        table.insert(calls, {text = text, coords = coords})
+    end
+    
 end)
 
+
+RegisterNetEvent("guille_dispatch:mecaToClient")
+AddEventHandler("guille_dispatch:mecaToClient", function(text, coords)
+    if PlayerData.job and PlayerData.job.name == 'mechanic' then
+        callnum = callnum + 1
+        totalcalls = totalcalls + 1
+        SendNUIMessage({
+            content = text;
+            callnum = callnum;
+            totalcalls = totalcalls;
+            newmecaalert = true;
+        })
+        table.insert(calls, {text = text, coords = coords})
+    end
+    
+end)
 
 
 RegisterNetEvent("guille_dispatch:robberyToClient")
 AddEventHandler("guille_dispatch:robberyToClient", function(type, text, coords, model)
     if PlayerData.job and PlayerData.job.name == 'police' then
+        print("hey")
         callnum = callnum + 1
         totalcalls = totalcalls + 1
         if Config.enableRobberyPics then

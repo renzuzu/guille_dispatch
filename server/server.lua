@@ -4,16 +4,26 @@ TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
 RegisterServerEvent("guille_dispatch:sendAlert")
 AddEventHandler("guille_dispatch:sendAlert", function(text, coords)
-    local xPlayers = ESX.GetPlayers() 
-    for i=1, #xPlayers, 1 do
-        TriggerClientEvent("guille_dispatch:alertToClient", xPlayers[i], text, coords)
-    end
+    TriggerClientEvent("guille_dispatch:alertToClient", -1, text, coords)
+end)
+
+RegisterServerEvent("guille_dispatch:sendAmbuAlert")
+AddEventHandler("guille_dispatch:sendAmbuAlert", function(text, coords)
+    TriggerClientEvent("guille_dispatch:auxToClient", -1, text, coords)
+end)
+
+RegisterServerEvent("guille_dispatch:sendMecaAlert")
+AddEventHandler("guille_dispatch:sendMecaAlert", function(text, coords)
+    TriggerClientEvent("guille_dispatch:mecaToClient", -1, text, coords)
 end)
 
 RegisterServerEvent("guille_dispatch:sendVehRob")
 AddEventHandler("guille_dispatch:sendVehRob", function(text, coords, model)
-    local xPlayers = ESX.GetPlayers() 
-    for i=1, #xPlayers, 1 do
-        TriggerClientEvent("guille_dispatch:vehToClient", xPlayers[i], text, coords, model)
-    end
+    TriggerClientEvent("guille_dispatch:vehToClient", -1, text, coords, model)
 end)
+
+RegisterServerEvent("guille_dispatch:sendTaxiaAlert")
+AddEventHandler("guille_dispatch:sendTaxiaAlert", function(text, coords)
+    TriggerClientEvent("guille_dispatch:taxiToClient", -1, text, coords)
+end)
+

@@ -161,6 +161,18 @@ body{
     animation: color_change 2s forwards;
 }
 
+.t-frame-sup-border.ambualert {
+    animation: color_ambuchange 2s forwards;
+}
+
+.t-frame-sup-border.mecaalert {
+    animation: color_mecachange 2s forwards;
+}
+
+.t-frame-sup-border.taxialert {
+    animation: color_taxichange 2s forwards;
+}
+
 
 .t-frame-inf-border {
     position: absolute;
@@ -321,6 +333,41 @@ body{
     }
 }
 
+@keyframes color_ambuchange {
+    0% {
+        background-color: #313030;
+    }
+    50% {
+        background-color: rgba(228, 11, 11, 0.651);
+    }
+    100% {
+        background-color: #313030;
+    }
+}
+
+@keyframes color_taxichange {
+    0% {
+        background-color: #313030;
+    }
+    50% {
+        background-color: rgba(228, 195, 11, 0.651);
+    }
+    100% {
+        background-color: #313030;
+    }
+}
+
+@keyframes color_mecachange {
+    0% {
+        background-color: #313030;
+    }
+    50% {
+        background-color: rgba(192, 189, 189, 0.651);
+    }
+    100% {
+        background-color: #313030;
+    }
+}
 
 @keyframes contrast {
     0% {
