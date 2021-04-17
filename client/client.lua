@@ -1,5 +1,6 @@
 local calls = {}
 local callnum = 0
+local totalcalls = 0
 local config = false
 local showed = false
 local PlayerData = {}
@@ -49,9 +50,11 @@ end)
 RegisterNetEvent("guille_dispatch:alertToClient")
 AddEventHandler("guille_dispatch:alertToClient", function(text, coords)
     callnum = callnum + 1
+    totalcalls = totalcalls + 1
     SendNUIMessage({
         content = text;
         callnum = callnum;
+        totalcalls = totalcalls;
         newalert = true;
     })
     table.insert(calls, {text = text, coords = coords})
@@ -60,15 +63,152 @@ end)
 RegisterNetEvent("guille_dispatch:vehToClient")
 AddEventHandler("guille_dispatch:vehToClient", function(text, coords, model)
     callnum = callnum + 1
+    totalcalls = totalcalls + 1
     SendNUIMessage({
         content = text;
         callnum = callnum;
+        totalcalls = totalcalls;
         pic = true;
         model = model;
         newalert = true;
 
     })
     table.insert(calls, {text = text, coords = coords, model = model})
+end)
+
+RegisterCommand("hola", function()
+    TriggerEvent("guille_dispatch:baduToClient", "pacific")
+end, false)
+
+RegisterNetEvent("guille_dispatch:robberyToClient")
+AddEventHandler("guille_dispatch:baduToClient", function(type, text, coords, model)
+    callnum = callnum + 1
+    totalcalls = totalcalls + 1
+    if Config.enableRobberyPics then
+        if type == "247" then
+            SendNUIMessage({
+                content = "Se ha disparado una alarma en un 24/7, porfavor acudan!";
+                callnum = callnum;
+                totalcalls = totalcalls;
+                pic = true;
+                model = 247;
+                newalert = true;
+
+            })
+            table.insert(calls, {text = "Se ha disparado una alarma en un 24/7, porfavor acudan!", coords = coords, model = 247})
+        elseif type == "vangelico" then
+            SendNUIMessage({
+                content = "Se ha disparado una alarma en la joyería, porfavor acudan!";
+                callnum = callnum;
+                totalcalls = totalcalls;
+                pic = true;
+                model = "vangelico";
+                newalert = true;
+
+            })
+            table.insert(calls, {text = "Se ha disparado una alarma en la joyería, porfavor acudan!", coords = coords, model = "vangelico"})
+        elseif type == "ammunation" then
+            SendNUIMessage({
+                content = "Se ha disparado una alarma en un AmmuNation, porfavor acudan!";
+                callnum = callnum;
+                totalcalls = totalcalls;
+                pic = true;
+                model = "ammunation";
+                newalert = true;
+
+            })
+            table.insert(calls, {text = "Se ha disparado una alarma en un AmmuNation, porfavor acudan!", coords = coords, model = "ammunation"})
+        elseif type == "fleeca" then
+            SendNUIMessage({
+                content = "Se ha disparado una alarma en un Fleeca, porfavor acudan!";
+                callnum = callnum;
+                totalcalls = totalcalls;
+                pic = true;
+                model = "fleeca";
+                newalert = true;
+
+            })
+            table.insert(calls, {text = "Se ha disparado una alarma en un Fleeca, porfavor acudan!", coords = coords, model = "fleeca"})
+        elseif type == "humane" then
+            SendNUIMessage({
+                content = "Se ha disparado una alarma en los laboratorios Humane, porfavor acudan!";
+                callnum = callnum;
+                totalcalls = totalcalls;
+                pic = true;
+                model = "humane";
+                newalert = true;
+
+            })
+            table.insert(calls, {text = "Se ha disparado una alarma en los laboratorios Humane, porfavor acudan!", coords = coords, model = "humane"})
+        elseif type == "pacific" then
+            SendNUIMessage({
+                content = "Se ha disparado una alarma en el Pacific Standard, porfavor acudan!";
+                callnum = callnum;
+                totalcalls = totalcalls;
+                pic = true;
+                model = "pacific";
+                newalert = true;
+
+            })
+            table.insert(calls, {text = "Se ha disparado una alarma en el Pacific Standard, porfavor acudan!", coords = coords, model = "pacific"})
+        end
+    else
+        if type == "247" then
+            SendNUIMessage({
+                content = "Se ha disparado una alarma en un 24/7, porfavor acudan!";
+                callnum = callnum;
+                totalcalls = totalcalls;
+                newalert = true;
+
+            })
+            table.insert(calls, {text = "Se ha disparado una alarma en un 24/7, porfavor acudan!", coords = coords})
+        elseif type == "vangelico" then
+            SendNUIMessage({
+                content = "Se ha disparado una alarma en la joyería, porfavor acudan!";
+                callnum = callnum;
+                totalcalls = totalcalls;
+                newalert = true;
+
+            })
+            table.insert(calls, {text = "Se ha disparado una alarma en la joyería, porfavor acudan!", coords = coords})
+        elseif type == "ammunation" then
+            SendNUIMessage({
+                content = "Se ha disparado una alarma en un AmmuNation, porfavor acudan!";
+                callnum = callnum;
+                totalcalls = totalcalls;
+                newalert = true;
+
+            })
+            table.insert(calls, {text = "Se ha disparado una alarma en un AmmuNation, porfavor acudan!", coords = coords})
+        elseif type == "fleeca" then
+            SendNUIMessage({
+                content = "Se ha disparado una alarma en un Fleeca, porfavor acudan!";
+                callnum = callnum;
+                totalcalls = totalcalls;
+                newalert = true;
+
+            })
+            table.insert(calls, {text = "Se ha disparado una alarma en un Fleeca, porfavor acudan!", coords = coords})
+        elseif type == "humane" then
+            SendNUIMessage({
+                content = "Se ha disparado una alarma en los laboratorios Humane, porfavor acudan!";
+                callnum = callnum;
+                totalcalls = totalcalls;
+                newalert = true;
+
+            })
+            table.insert(calls, {text = "Se ha disparado una alarma en los laboratorios Humane, porfavor acudan!", coords = coords})
+        elseif type == "pacific" then
+            SendNUIMessage({
+                content = "Se ha disparado una alarma en el Pacific Standard, porfavor acudan!";
+                callnum = callnum;
+                totalcalls = totalcalls;
+                newalert = true;
+
+            })
+            table.insert(calls, {text = "Se ha disparado una alarma en el Pacific Standard, porfavor acudan!", coords = coords})
+        end
+    end
 end)
 
 RegisterCommand("forzar", function()
@@ -135,13 +275,16 @@ RegisterCommand("left", function()
 end, false)
 
 RegisterCommand("mover", function(source, args)
-    SetNuiFocus(true, true)
-    SendNUIMessage({
-        inConfig = true;
-    })
+    if showed then 
+        SetNuiFocus(true, true)
+        SendNUIMessage({
+            inConfig = true;
+        })
+    end
 end, false)
 
-RegisterCommand("accept", function(source, args)
+RegisterCommand("acceptentorno", function(source, args)
+    --print("hol")
     if callnum ~= 0 then
         SetNewWaypoint(calls[callnum]['coords'])
         ESX.ShowNotification('Se ha marcado la posición en tu ~r~GPS')
@@ -157,24 +300,48 @@ RegisterKeyMapping("right", ("tus muertos"), 'keyboard', 'right')
 
 RegisterKeyMapping("left", ("tus muertos"), 'keyboard', 'left')
 
-RegisterKeyMapping("accept", ("tus muertos"), 'keyboard', 'pageup')
-
 RegisterKeyMapping("showalerts", ("tus muertos"), 'keyboard', 'f4')
+
+RegisterKeyMapping("acceptentorno", ("tus muertos"), 'keyboard', 'o')
 
 RegisterNUICallback("exit", function()
     SetNuiFocus(false, false)
-   
-    if calls[callnum]['model'] ~= nil then
-        SendNUIMessage({
-            content = calls[callnum]['text'];
-            callnum = num;
-            pic = true;
-            model = calls[callnum]['model'];
-        })
+    if checkTable(calls) then
+        if calls[callnum]['model'] ~= nil then
+            SendNUIMessage({
+                content = calls[callnum]['text'];
+                callnum = num;
+                pic = true;
+                model = calls[callnum]['model'];
+            })
+        else
+            SendNUIMessage({
+                content = calls[callnum]['text'];
+                callnum = num;
+            })
+        end
     else
-        SendNUIMessage({
-            content = calls[callnum]['text'];
-            callnum = num;
-        })
+        if checkTable(calls) then
+            SendNUIMessage({
+                content = calls[callnum]['text'];
+                callnum = num;
+            })
+        else
+            SendNUIMessage({
+                content = "Sin llamadas recibidas";
+                callnum = num;
+            })
+        end
     end
 end)
+
+function checkTable(table)
+    for k,v in pairs(calls) do
+        inIt = true
+    end
+    if inIt then
+        return true
+    else
+        return false
+    end
+end

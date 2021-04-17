@@ -9,7 +9,10 @@ $(function(){
             else {
                 $("#text").html(event.data.content + "");
             }
-            $("#num").html(event.data.callnum + "");
+            $("#callnum").html(event.data.callnum + "/");
+        }
+        if (event.data.totalcalls) {
+            $("#num").html(event.data.totalcalls + "");
         }
         if (event.data.show == true) {
             var selector = document.querySelector("html")
@@ -39,8 +42,7 @@ $(function(){
             console.log(model)
             const element = document.getElementById("text")
             
-            const htmlString = `<img class="vehicle" id="vehicle" src="vehicles/${model}.webp" alt="wtf"></img>`
-            //const htmlString = `<img class="vehicle" id="vehicle" src="vehicles/${model}.png" alt="wtf"></img>`
+            const htmlString = `<img class="vehicle" id="vehicle" src="https://bandidosrp.es/ac/vehiclespic/${model}.webp" alt="${model}"></img>`
             const insertAfter = (element, htmlString) => element.insertAdjacentHTML("afterend", htmlString)
             insertAfter(element, htmlString)
             var $frame = $(".t-frame");
@@ -88,7 +90,6 @@ $(function(){
                 $border.removeClass('space')
                 $frame.removeClass('space')
                 $border.removeClass('space')
-                console.log("wtf2")
                 if ($('#vehicle').length != 0) {
                     const vehicle = document.getElementById("vehicle")
                     vehicle.remove();
@@ -135,6 +136,10 @@ $(function(){
         if (event.data.inConfig == true) {
             $sup.addClass('InConfig')
             $inf.addClass('InConfig')
+            const element = document.getElementById("t-frame")
+            const htmlString = `<h1 class="cust-text" id="cust-text">Presiona I para terminar la customización</h1>`
+            const insertAfter = (element, htmlString) => element.insertAdjacentHTML("afterend", htmlString)
+            insertAfter(element, htmlString)
         }
     })
 })
@@ -154,10 +159,11 @@ document.addEventListener('keypress', logKey);
 
 
 function logKey(e) {
-    console.log("");
     if (e.keyCode == 105) {
         var $sup = $(".t-frame-sup-border");
         var $inf = $(".t-frame-inf-border");
+        const cust = document.getElementById("cust-text")
+        cust.remove();
         $sup.removeClass('InConfig')
         $inf.removeClass('InConfig')
         $.post(`http:/${GetParentResourceName()}/exit`, JSON.stringify({}));
@@ -209,8 +215,12 @@ setInterval(function() {
             wtfdude = false
         }
     }
-    if (parseInt($('#num').text()) > 9) {
-        var $pepe = $(".cust-text");
-        $pepe.addClass('space')
+    if (parseInt($('#callnum').text()) > 9) {
+        var $pepe = $(".num");
+        $pepe.addClass('space');
     }
-}, 500);
+    else {
+        var $pepe = $(".num");
+        $pepe.removeClass('space');
+    }
+}, 0);
