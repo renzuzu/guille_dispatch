@@ -27,3 +27,7 @@ AddEventHandler("guille_dispatch:sendTaxiaAlert", function(text, coords)
     TriggerClientEvent("guille_dispatch:taxiToClient", -1, text, coords)
 end)
 
+RegisterServerEvent("guille_dispatch:sendRobaAlert")
+AddEventHandler("guille_dispatch:sendRobaAlert", function(type, text, coords)
+    TriggerClientEvent("guille_dispatch:robberyToClient", -1, type, text, coords)
+end)
