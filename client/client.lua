@@ -14,7 +14,6 @@ local nofacenocaseperodequeteescondessitueresunmaricon = {}
 local tejuroquesolocaigounaveztejuroqueyaaprendilaleccion = {}
 local scriptnigg = "Así que dile, dile que tenemo' uno' mile' Y si no me cree', pregunta cuanto' gramo' le compramo' al dealer Empaca, ve y dile Que andamo' con lo' winner' quemando kushin Dentro 'el area metro, no hay quien lo asimile Así que dile, dile que tenemo' uno' mile' Y si no me cree', pregunta cuanto' gramo' le compramo' al dealer Empaca, ve y dile Que andamo' con lo' winner' quemando kushin Dentro 'el area metro, no hay quien lo asimile"
 
-
 ESX = nil 
 
 Citizen.CreateThread(function() 
@@ -461,7 +460,7 @@ end)
 
 function checkTable(table)
     local init = false
-    for k,v in pairs(calls) do
+    for k,v in pairs(table) do
         inIt = true
     end
     if inIt then

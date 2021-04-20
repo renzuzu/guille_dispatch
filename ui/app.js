@@ -15,11 +15,11 @@ $(function(){
             $("#num").html(event.data.totalcalls + "");
         }
         if (event.data.show == true) {
-            var selector = document.querySelector("html")
+            var selector = document.getElementById("all")
             selector.style = "display:block;"
         }
         if (event.data.show == false) {
-            var selector = document.querySelector("html")
+            var selector = document.getElementById("all")
             selector.style = "display:none;"
         }
         if (event.data.left) {
@@ -206,12 +206,13 @@ $(function(){
 
 $(function(){
     $("#all").draggable();
+    $("#configmenu").draggable();
 });
 
 document.addEventListener("DOMContentLoaded", () => {
     console.log("Loaded")
     $("#text").html("Sin llamadas recibidas");
-    var selector = document.querySelector("html")
+    var selector = document.getElementById("all")
     selector.style = "display:none;"
 });
 
@@ -284,3 +285,22 @@ setInterval(function() {
         $pepe.removeClass('space');
     }
 }, 0);
+
+
+
+
+
+
+// MENU
+
+
+$(function() {
+    document.getElementById("images-button").addEventListener("click", addalert);
+    const table = document.getElementById("table");
+    function addalert() {
+        const row = table.insertRow();
+        var toInsert = `<tr><td style="word-wrap: break-word" >gay</td></tr>`
+
+        $('#table').append(toInsert);
+    }
+});
