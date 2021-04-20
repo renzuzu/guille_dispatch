@@ -9,8 +9,6 @@ $(function(){
             else {
                 $("#text").html(event.data.content + "");
                 const row = table.insertRow();
-                var toInsert = `<tr style="margin-top:500px"><td class="table-container"><th class="table-code">Alerta de robo</th><th class="content-table-text">${event.data.content}</th><th class="table-id">2</th></td></tr>`
-                $('#table').append(toInsert);
             }
             $("#callnum").html(event.data.callnum + "/");
         }
@@ -115,7 +113,8 @@ $(function(){
             },1000);
         }
         if (event.data.newalert) {
-            console.log("wtf")
+            var toInsert = `<tr style="margin-top:500px"><td class="table-container"><th class="table-code">Alerta de robo</th><th class="content-table-text">${event.data.content}</th><th class="table-id">${event.data.id}</th></td></tr>`
+            $('#table').append(toInsert);
             var $av = $(".t-frame-sup-border");
             var $text1 = $(".callnum");
             var $text2 = $(".cust-text");
@@ -133,6 +132,11 @@ $(function(){
                 $text3.removeClass('alert-contrast');
                 $pic.removeClass('alert-contrast');
             },2000);
+        }
+        if (event.data.restart == true) {
+            $("#callnum").html(0 + "/");
+            $("#num").html(0);
+            $("#text").html("Sin llamadas recibidas");
         }
         if (event.data.newambualert) {
             console.log("wtf")
@@ -289,20 +293,16 @@ setInterval(function() {
     }
 }, 0);
 
-
-
-
-
-
 // MENU
 
 
 $(function() {
-    document.getElementById("images-button").addEventListener("click", addalert);
-    const table = document.getElementById("table");
-    function addalert() {
-        const row = table.insertRow();
-        var toInsert = `<tr style="margin-top:500px"><td class="table-container"><th class="table-code">Alerta de robo</th><th class="content-table-text">Un hombre me ha robado lol pablo eres gay</th><th class="table-id">2</th></td></tr>`
-        $('#table').append(toInsert);
+    document.getElementById("images-button").addEventListener("click", tooglepics);
+    document.getElementById("delete-button").addEventListener("click", deletealerts);
+    function tooglepics() {
+        $.post(`http:/${GetParentResourceName()}/tooglepic`, JSON.stringify({}));
+    }
+    function deletealerts() {
+        $.post(`http:/${GetParentResourceName()}/deletealerts`, JSON.stringify({}));
     }
 });

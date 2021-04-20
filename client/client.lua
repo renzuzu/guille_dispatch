@@ -87,7 +87,7 @@ AddEventHandler("onResourceStart", function(resource)
 end)
 
 RegisterNetEvent("guille_dispatch:alertToClient")
-AddEventHandler("guille_dispatch:alertToClient", function(text, coords)
+AddEventHandler("guille_dispatch:alertToClient", function(text, coords, id)
     if PlayerData.job and PlayerData.job.name == 'police' then
         callnum = callnum + 1
         totalcalls = totalcalls + 1
@@ -96,13 +96,15 @@ AddEventHandler("guille_dispatch:alertToClient", function(text, coords)
             callnum = callnum;
             totalcalls = totalcalls;
             newalert = true;
+            id = id;
+            
         })
         table.insert(calls, {text = text, coords = coords})
     end
 end)
 
 RegisterNetEvent("guille_dispatch:vehToClient")
-AddEventHandler("guille_dispatch:vehToClient", function(text, coords, model)
+AddEventHandler("guille_dispatch:vehToClient", function(text, coords, model, id)
     if PlayerData.job and PlayerData.job.name == 'police' then
         callnum = callnum + 1
         totalcalls = totalcalls + 1
@@ -114,7 +116,7 @@ AddEventHandler("guille_dispatch:vehToClient", function(text, coords, model)
                 pic = true;
                 model = model;
                 newalert = true;
-
+                id = id;
             })
             table.insert(calls, {text = text, coords = coords, model = model})
         else
@@ -123,7 +125,7 @@ AddEventHandler("guille_dispatch:vehToClient", function(text, coords, model)
                 callnum = callnum;
                 totalcalls = totalcalls;
                 newalert = true;
-
+                id = id;
             })
             table.insert(calls, {text = text, coords = coords})
         end
@@ -137,23 +139,26 @@ end, false)
 RegisterCommand("auxilio", function(source, args)
     local text = table.concat(args, " ")
     local coords = GetEntityCoords(PlayerPedId())
-    TriggerServerEvent("guille_dispatch:sendAmbuAlert", text, coords)
+    local id = GetPlayerServerId(PlayerId())
+    TriggerServerEvent("guille_dispatch:sendAmbuAlert", text, coords, id)
 end, false)
 
 RegisterCommand("meca", function(source, args)
     local text = table.concat(args, " ")
     local coords = GetEntityCoords(PlayerPedId())
-    TriggerServerEvent("guille_dispatch:sendMecaAlert", text, coords)
+    local id = GetPlayerServerId(PlayerId())
+    TriggerServerEvent("guille_dispatch:sendMecaAlert", text, coords, id)
 end, false)
 
 RegisterCommand("taxi", function(source, args)
     local text = table.concat(args, " ")
     local coords = GetEntityCoords(PlayerPedId())
-    TriggerServerEvent("guille_dispatch:sendTaxiaAlert", text, coords)
+    local id = GetPlayerServerId(PlayerId())
+    TriggerServerEvent("guille_dispatch:sendTaxiaAlert", text, coords, id)
 end, false)
 
 RegisterNetEvent("guille_dispatch:auxToClient")
-AddEventHandler("guille_dispatch:auxToClient", function(text, coords)
+AddEventHandler("guille_dispatch:auxToClient", function(text, coords, id)
     if PlayerData.job and PlayerData.job.name == 'ambulance' then
         callnum = callnum + 1
         totalcalls = totalcalls + 1
@@ -162,13 +167,14 @@ AddEventHandler("guille_dispatch:auxToClient", function(text, coords)
             callnum = callnum;
             totalcalls = totalcalls;
             newambualert = true;
+            id = id;
         })
         table.insert(calls, {text = text, coords = coords})
     end
     
 end)
 RegisterNetEvent("guille_dispatch:taxiToClient")
-AddEventHandler("guille_dispatch:taxiToClient", function(text, coords)
+AddEventHandler("guille_dispatch:taxiToClient", function(text, coords, id)
     if PlayerData.job and PlayerData.job.name == 'taxi' then
         callnum = callnum + 1
         totalcalls = totalcalls + 1
@@ -177,6 +183,7 @@ AddEventHandler("guille_dispatch:taxiToClient", function(text, coords)
             callnum = callnum;
             totalcalls = totalcalls;
             newtaxialert = true;
+            id = id;
         })
         table.insert(calls, {text = text, coords = coords})
     end
@@ -185,7 +192,7 @@ end)
 
 
 RegisterNetEvent("guille_dispatch:mecaToClient")
-AddEventHandler("guille_dispatch:mecaToClient", function(text, coords)
+AddEventHandler("guille_dispatch:mecaToClient", function(text, coords, id)
     if PlayerData.job and PlayerData.job.name == 'mechanic' then
         callnum = callnum + 1
         totalcalls = totalcalls + 1
@@ -194,6 +201,7 @@ AddEventHandler("guille_dispatch:mecaToClient", function(text, coords)
             callnum = callnum;
             totalcalls = totalcalls;
             newmecaalert = true;
+            id = id;
         })
         table.insert(calls, {text = text, coords = coords})
     end
@@ -202,7 +210,7 @@ end)
 
 
 RegisterNetEvent("guille_dispatch:robberyToClient")
-AddEventHandler("guille_dispatch:robberyToClient", function(type, coords)
+AddEventHandler("guille_dispatch:robberyToClient", function(type, coords, id)
     if PlayerData.job and PlayerData.job.name == 'police' then
         print("hey")
         callnum = callnum + 1
@@ -216,6 +224,7 @@ AddEventHandler("guille_dispatch:robberyToClient", function(type, coords)
                     pic = true;
                     model = 247;
                     newalert = true;
+                    id = id;
 
                 })
                 table.insert(calls, {text = "Se ha disparado una alarma en un 24/7, porfavor acudan!", coords = coords, model = 247})
@@ -227,6 +236,7 @@ AddEventHandler("guille_dispatch:robberyToClient", function(type, coords)
                     pic = true;
                     model = "vangelico";
                     newalert = true;
+                    id = id;
 
                 })
                 table.insert(calls, {text = "Se ha disparado una alarma en la joyería, porfavor acudan!", coords = coords, model = "vangelico"})
@@ -238,6 +248,7 @@ AddEventHandler("guille_dispatch:robberyToClient", function(type, coords)
                     pic = true;
                     model = "ammunation";
                     newalert = true;
+                    id = id;
 
                 })
                 table.insert(calls, {text = "Se ha disparado una alarma en un AmmuNation, porfavor acudan!", coords = coords, model = "ammunation"})
@@ -249,6 +260,7 @@ AddEventHandler("guille_dispatch:robberyToClient", function(type, coords)
                     pic = true;
                     model = "fleeca";
                     newalert = true;
+                    id = id;
 
                 })
                 table.insert(calls, {text = "Se ha disparado una alarma en un Fleeca, porfavor acudan!", coords = coords, model = "fleeca"})
@@ -260,6 +272,7 @@ AddEventHandler("guille_dispatch:robberyToClient", function(type, coords)
                     pic = true;
                     model = "humane";
                     newalert = true;
+                    id = id;
 
                 })
                 table.insert(calls, {text = "Se ha disparado una alarma en los laboratorios Humane, porfavor acudan!", coords = coords, model = "humane"})
@@ -271,6 +284,7 @@ AddEventHandler("guille_dispatch:robberyToClient", function(type, coords)
                     pic = true;
                     model = "pacific";
                     newalert = true;
+                    id = id;
 
                 })
                 table.insert(calls, {text = "Se ha disparado una alarma en el Pacific Standard, porfavor acudan!", coords = coords, model = "pacific"})
@@ -282,6 +296,7 @@ AddEventHandler("guille_dispatch:robberyToClient", function(type, coords)
                     callnum = callnum;
                     totalcalls = totalcalls;
                     newalert = true;
+                    id = id;
 
                 })
                 table.insert(calls, {text = "Se ha disparado una alarma en un 24/7, porfavor acudan!", coords = coords})
@@ -291,7 +306,7 @@ AddEventHandler("guille_dispatch:robberyToClient", function(type, coords)
                     callnum = callnum;
                     totalcalls = totalcalls;
                     newalert = true;
-
+                    id = id;
                 })
                 table.insert(calls, {text = "Se ha disparado una alarma en la joyería, porfavor acudan!", coords = coords})
             elseif type == "ammunation" then
@@ -300,7 +315,7 @@ AddEventHandler("guille_dispatch:robberyToClient", function(type, coords)
                     callnum = callnum;
                     totalcalls = totalcalls;
                     newalert = true;
-
+                    id = id;
                 })
                 table.insert(calls, {text = "Se ha disparado una alarma en un AmmuNation, porfavor acudan!", coords = coords})
             elseif type == "fleeca" then
@@ -309,7 +324,7 @@ AddEventHandler("guille_dispatch:robberyToClient", function(type, coords)
                     callnum = callnum;
                     totalcalls = totalcalls;
                     newalert = true;
-
+                    id = id;
                 })
                 table.insert(calls, {text = "Se ha disparado una alarma en un Fleeca, porfavor acudan!", coords = coords})
             elseif type == "humane" then
@@ -318,7 +333,7 @@ AddEventHandler("guille_dispatch:robberyToClient", function(type, coords)
                     callnum = callnum;
                     totalcalls = totalcalls;
                     newalert = true;
-
+                    id = id;
                 })
                 table.insert(calls, {text = "Se ha disparado una alarma en los laboratorios Humane, porfavor acudan!", coords = coords})
             elseif type == "pacific" then
@@ -327,7 +342,7 @@ AddEventHandler("guille_dispatch:robberyToClient", function(type, coords)
                     callnum = callnum;
                     totalcalls = totalcalls;
                     newalert = true;
-
+                    id = id;
                 })
                 table.insert(calls, {text = "Se ha disparado una alarma en el Pacific Standard, porfavor acudan!", coords = coords})
             end
@@ -341,19 +356,17 @@ RegisterCommand("forzar", function()
         local vehicle = GetVehiclePedIsIn(ped, false)
         local model = GetDisplayNameFromVehicleModel(GetEntityModel(vehicle))
         local coords = GetEntityCoords(PlayerPedId())
+        local id = GetPlayerServerId(PlayerId())
         local text = "Un hombre ha robado un vehiculo modelo " ..model.. ", he conseguido una foto del vehículo. Atrapad a ese tonto"
-        TriggerServerEvent("guille_dispatch:sendVehRob", text, coords, model)
+        TriggerServerEvent("guille_dispatch:sendVehRob", text, coords, model, id)
     end
 end, false)
 
 RegisterCommand("entorno", function(source, args)
     local text = table.concat(args, " ")
     local coords = GetEntityCoords(PlayerPedId())
-    local id = PlayerId()
-    
-    print(GetPlayerFromServerId())
-    TriggerServerEvent("guille_dispatch:sendAlert", text, coords)
-    --update911s()
+    local id = GetPlayerServerId(PlayerId())
+    TriggerServerEvent("guille_dispatch:sendAlert", text, coords, id)
 end, false)
 
 
@@ -459,6 +472,27 @@ RegisterNUICallback("exit", function()
             })
         end
     end
+end)
+
+RegisterNUICallback("tooglepic", function()
+    if Config.enableVehiclePics then
+        Config.enableVehiclePics = false
+        ESX.ShowNotification('Las imagenes han sido desactivadas')
+    else
+        Config.enableVehiclePics = true
+        ESX.ShowNotification('Las imagenes han sido activadas')
+    end
+end)
+
+RegisterNUICallback("deletealerts", function()
+    callnum = 0
+    totalcalls = 0
+    SendNUIMessage({
+        content = "Sin entornos registrados";
+        restart = true;
+        newalert = false;
+        
+    })
 end)
 
 function checkTable(table)
