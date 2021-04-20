@@ -539,20 +539,79 @@ body{
     right: 0;
 }
 table {
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-y: overlay;
     table-layout:unset !important;
 }
 .alerts-table {
+    position: absolute;
     margin-top: 20px;
     color: white;
     table-layout: fixed;
-    width: 100%;
+    width: 700px;
     overflow: scroll;
     z-index: 5;
-    max-height: 100%;
+    max-height: 500px;
 }
 
 th, td {
-    word-break: break-word; /*or you can use word-break:break-all*/
-    min-width: 50px; /*set min-width as needed*/
+    word-break: break-word;
+    min-width: 50px;
+}
+
+.table-container {
+    display: flex;
+    padding-left: -50px;
+    background-color: #465252;
+    width: 400px;
+    margin-left: 48px;
+    z-index: 4;
+    font-family: franklin;
+    height: 100px;
+    border-radius: 3px;
+}
+
+/*tabla*/
+.table-id {
+    position: absolute;
+    z-index: 3;
+    height: 100px;
+    margin-top: -25px;
+    font-family: franklin;
+    margin-left: 30px;
+}
+
+.content-table-text {
+    position: absolute;
+    z-index: 4;
+    font-family: franklin;
+    left: 78px;
+    width: 340px;
+    font-size: 10px;
+    margin-top: -60px;
+}
+
+.table-code {
+    position: absolute;
+    z-index: 3;
+    font-display: center;
+    left: 200px;
+    margin-top: -100px;
+    font-family: franklin;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+::-webkit-scrollbar-track {
+    background: #313030; 
+}
+   
+::-webkit-scrollbar-thumb {
+    background: rgb(32, 31, 31); 
+}
+  
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
 }

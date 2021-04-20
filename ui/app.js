@@ -8,6 +8,9 @@ $(function(){
             }
             else {
                 $("#text").html(event.data.content + "");
+                const row = table.insertRow();
+                var toInsert = `<tr style="margin-top:500px"><td class="table-container"><th class="table-code">Alerta de robo</th><th class="content-table-text">${event.data.content}</th><th class="table-id">2</th></td></tr>`
+                $('#table').append(toInsert);
             }
             $("#callnum").html(event.data.callnum + "/");
         }
@@ -299,8 +302,7 @@ $(function() {
     const table = document.getElementById("table");
     function addalert() {
         const row = table.insertRow();
-        var toInsert = `<tr><td style="word-wrap: break-word" >gay</td></tr>`
-
+        var toInsert = `<tr style="margin-top:500px"><td class="table-container"><th class="table-code">Alerta de robo</th><th class="content-table-text">Un hombre me ha robado lol pablo eres gay</th><th class="table-id">2</th></td></tr>`
         $('#table').append(toInsert);
     }
 });

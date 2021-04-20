@@ -8,7 +8,7 @@
         <script src="https://kit.fontawesome.com/a412d17519.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js" integrity="sha256-eGE6blurk5sHj+rmkfsGYeKyZx3M4bG+ZlFyA7Kns7E=" crossorigin="anonymous"></script>
         <link rel=’stylesheet’ id=’jquery-ui-css-css’ href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css?ver=5.2.4&#8242" type=’text/css’ media=’all’ />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
         <script src="app.js"></script>
@@ -27,11 +27,8 @@
                     
                     <img class="infsvg" src="pol.png" alt="wtf"></img>
                     <image class="right" src="right.png">
-                    <!--<div class="right-border"></div>-->
                     <image class="left" src="left.png">
-                    <!--<div class="left-border"></div>-->
                     <image class="avpag" src="repag.png">
-                    <!--<div class="avpag-border"></div>-->
                     <div class="callnum" id="callnum">0 /</div>
                     <div id="num" class="num">0</div>
                 </div>
@@ -44,10 +41,14 @@
                 <span class="menu-titlename">Dispatch config menu</span>
                 <button class="delete-button" id="delete-button" style="vertical-align:middle"><span>Borrar alertas </span></button>
                 <button class="images-button" id="images-button" style="vertical-align:middle"><span>Ver imágenes </span></button>
-                <div style="overflow:auto; width: 500px; height: 600px;">
-                    <table class="alerts-table" style="table-layout: fixed; width: 100%" id="table">
+                <div style="overflow:auto; position: absolute; width: 500px; height: 450px;">
+                    <table class="alerts-table" style="width: 100%; " id="table">
                         <tr>
-                            <td style="word-wrap: break-word">gay</td>
+                            <td class="table-container" id="table-container" style="overflow: hidden;">
+                                <th class="table-code" id="table-code">Alerta de robo</th>
+                                <th class="content-table-text" id="content-table-text">Un hombre me ha robado lol pablo eres gay</th>
+                                <th class="table-id" id="table-id">2</th>
+                            </td>
                         </tr>
                     </table>
                 </div>
