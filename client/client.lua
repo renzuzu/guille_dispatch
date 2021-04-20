@@ -22,6 +22,9 @@ Citizen.CreateThread(function()
         TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end) 
         Citizen.Wait(0) 
     end
+    while ESX.GetPlayerData().job == nil do
+		Citizen.Wait(10)
+	end
     PlayerData = ESX.GetPlayerData()
 end)
 
@@ -44,10 +47,26 @@ end)
 RegisterCommand("showalerts", function()
     if PlayerData.job and PlayerData.job.name == 'police' or PlayerData.job.name == 'ambulance' or PlayerData.job.name == 'mechanic' or PlayerData.job.name == 'taxi' then
         if not showed then
-            SendNUIMessage({
-                show = true;
-            })
-            showed = true
+            if checkTable(calls) then
+                if calls[callnum]['model'] then
+                    SendNUIMessage({
+                        show = true;
+                        pic = true;
+                        model = calls[callnum]['model'];
+                    })
+                    showed = true
+                else
+                    SendNUIMessage({
+                        show = true;
+                    })
+                    showed = true
+                end
+            else
+                SendNUIMessage({
+                    show = true;
+                })
+                showed = true
+            end
         else
             SendNUIMessage({
                 show = false;
@@ -184,7 +203,7 @@ end)
 
 
 RegisterNetEvent("guille_dispatch:robberyToClient")
-AddEventHandler("guille_dispatch:robberyToClient", function(type, text, coords, model)
+AddEventHandler("guille_dispatch:robberyToClient", function(type, coords)
     if PlayerData.job and PlayerData.job.name == 'police' then
         print("hey")
         callnum = callnum + 1
