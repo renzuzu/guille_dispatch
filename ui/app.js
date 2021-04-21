@@ -1,5 +1,6 @@
 let pic = false
-
+var alerts = []
+let selected
 $(function(){
     window.addEventListener("message", function(event){
         if (event.data.callnum) {
@@ -8,7 +9,7 @@ $(function(){
             }
             else {
                 $("#text").html(event.data.content + "");
-                const row = table.insertRow();
+                alerts.push(event.data.content);
             }
             $("#callnum").html(event.data.callnum + "/");
         }
@@ -28,7 +29,6 @@ $(function(){
             var $av = $(".left");
             $av.addClass('anim');
             setTimeout(function() {
-                console.log("pepe")
                 var $av = $(".left");
                 $av.removeClass('anim');
             },1000);
@@ -40,7 +40,6 @@ $(function(){
             } 
             pic = true
             let model = event.data.model;
-            console.log(model)
             const element = document.getElementById("text")
             
             const htmlString = `<img class="vehicle" id="vehicle" src="https://bandidosrp.es/ac/vehiclespic/${model}.webp" alt="${model}"></img>`
@@ -113,8 +112,9 @@ $(function(){
             },1000);
         }
         if (event.data.newalert) {
-            var toInsert = `<tr style="margin-top:500px"><td class="table-container"><th class="table-code">Alerta de robo</th><th class="content-table-text">${event.data.content}</th><th class="table-id">${event.data.id}</th></td></tr>`
+            var toInsert = `<tr style="margin-top:500px" id="table-container"><td class="table-container"><th class="table-code">Alerta de robo</th><th class="content-table-text">${event.data.content}</th><th class="table-id">${event.data.id}</th></td></tr>`
             $('#table').append(toInsert);
+
             var $av = $(".t-frame-sup-border");
             var $text1 = $(".callnum");
             var $text2 = $(".cust-text");
@@ -137,9 +137,10 @@ $(function(){
             $("#callnum").html(0 + "/");
             $("#num").html(0);
             $("#text").html("Sin llamadas recibidas");
+            $(".alerts-table").html("");
+            
         }
         if (event.data.newambualert) {
-            console.log("wtf")
             var $av = $(".t-frame-sup-border");
             var $text1 = $(".callnum");
             var $text2 = $(".cust-text");
@@ -159,7 +160,6 @@ $(function(){
             },2000);
         }
         if (event.data.newmecaalert) {
-            console.log("wtf")
             var $av = $(".t-frame-sup-border");
             var $text1 = $(".callnum");
             var $text2 = $(".cust-text");
@@ -179,7 +179,6 @@ $(function(){
             },2000);
         }
         if (event.data.newtaxialert) {
-            console.log("wtf")
             var $av = $(".t-frame-sup-border");
             var $text1 = $(".callnum");
             var $text2 = $(".cust-text");
@@ -208,12 +207,42 @@ $(function(){
             const insertAfter = (element, htmlString) => element.insertAdjacentHTML("afterend", htmlString)
             insertAfter(element, htmlString)
         }
+
+
     })
 })
 
 $(function(){
     $("#all").draggable();
     $("#configmenu").draggable();
+    $("#table").on('click', 'tr', function () {
+        var container = document.getElementsByClassName('.menu')[0];
+        selected = $(this).index();
+        const ele = document.getElementById('menu');
+        const menu = document.getElementById('menu');
+        document.addEventListener('click', contextmenu);
+        function contextmenu(e) {
+            if (e.target.id == "table-container" || $(e.target).parents("#table-container").length) {
+                if (e.target.id == "menu" || $(e.target).parents("#menu").length) { // Quick edit
+                }
+                else {
+                    e.preventDefault();
+                
+                    const rect = ele.getBoundingClientRect();
+                    const x = e.clientX;
+                    const y = e.clientY;
+
+                    menu.style.top = `${y}px`;
+                    menu.style.left = `${x}px`;
+            
+                    $(".menu-style").css("left", x + "px");
+                    $(".menu-style").css("top", y + "px");
+    
+                }
+            }   
+
+        };
+    });
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -234,14 +263,19 @@ function logKey(e) {
         cust.remove();
         $sup.removeClass('InConfig')
         $inf.removeClass('InConfig')
+        alerts.forEach((element) => {
+            
+        });
         $.post(`http:/${GetParentResourceName()}/exit`, JSON.stringify({}));
     }
 }
 
+
+
 let wtfdude = false
 
 setInterval(function() {
-    console.log();
+
     if ($('#text').text().length > 209) {
         var $frame = $(".t-frame");
         var $border = $(".t-frame-inf-border");
@@ -299,10 +333,15 @@ setInterval(function() {
 $(function() {
     document.getElementById("images-button").addEventListener("click", tooglepics);
     document.getElementById("delete-button").addEventListener("click", deletealerts);
+    document.getElementById("minimenu-button").addEventListener("click", deletealert);
     function tooglepics() {
         $.post(`http:/${GetParentResourceName()}/tooglepic`, JSON.stringify({}));
     }
     function deletealerts() {
         $.post(`http:/${GetParentResourceName()}/deletealerts`, JSON.stringify({}));
+    }
+    function deletealert() {
+        console.log(selected);
+        $("tr").eq(selected).remove();
     }
 });

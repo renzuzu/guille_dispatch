@@ -4,15 +4,9 @@ local totalcalls = 0
 local config = false
 local showed = false
 local PlayerData = {}
-local leescupienlacaraledijelargateperraquetedenyoulocomanlaputamequeriarobarlachainnoesbromaporesodoyporculoalaschapiadoresfuckkhahkasfuckchapiadoresnoquierotuculozorraquetejodan = "crabgay"
-local ifyousawwhatIdidthatdayinBrookmillParkyoudstayathomeIbackedmybladeandgrabbedhisneckIsplashedhimdownIfelthisbones = "crabgay"
-local ChopabulletonyourbrainonyourchestNiggasbeefinonthatInternetshitWhentheyseemeniggasshowmerespectSivasconpussiesteconviertesengay = "crabgay"
-local salgoalacalleunpococolocaoelninodepequenoamorlehafaltaosalgoconunflowqueatunovialeagustaoaminomesaludessinotehesaludao = "crabgay"
-local MeescuchanenlallecaymishermanodelmoduloMihermanodiceDonttalktoomuchnohayquehablarmuchosocioSicojoatuholarevientocabronlepartoelculoendoLosmenorebuscandosucuartosololepidenfeaDios = "crabgay"
-local bigrambomesudalapollaeltamanodeljambonomeestesfronteandositepilloconlacadenatelarobamosnotiransolofueronallidefrenteperoqueriaquesisinorespetansoymarroquitusoloeresunfalsomagrevibigrambomesudalapollaeltamanodeljambofuckpxrgvngboy = "eyoulokomanlaputamequerarobarlachain"
-local nofacenocaseperodequeteescondessitueresunmaricon = {}
-local tejuroquesolocaigounaveztejuroqueyaaprendilaleccion = {}
-local scriptnigg = "Así que dile, dile que tenemo' uno' mile' Y si no me cree', pregunta cuanto' gramo' le compramo' al dealer Empaca, ve y dile Que andamo' con lo' winner' quemando kushin Dentro 'el area metro, no hay quien lo asimile Así que dile, dile que tenemo' uno' mile' Y si no me cree', pregunta cuanto' gramo' le compramo' al dealer Empaca, ve y dile Que andamo' con lo' winner' quemando kushin Dentro 'el area metro, no hay quien lo asimile"
+local bigrambo = {}
+local nofilterquick = {}
+local wackyhijodeputa = {}
 
 ESX = nil 
 
@@ -487,12 +481,14 @@ end)
 RegisterNUICallback("deletealerts", function()
     callnum = 0
     totalcalls = 0
+    calls = {}
     SendNUIMessage({
         content = "Sin entornos registrados";
         restart = true;
         newalert = false;
         
     })
+    ESX.ShowNotification('Todas las alertas han sido borradas')
 end)
 
 function checkTable(table)

@@ -12,6 +12,11 @@
 
 body{
     overflow:hidden;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
 }
 
 .t-frame {
@@ -432,7 +437,7 @@ body{
     width: 500px;
     min-height: 150px; 
     height: 600px; 
-    background: #333130ec;
+    background: #313030ec;
     z-index: -2;
     border-radius: 5px;
 }
@@ -441,7 +446,7 @@ body{
     position: absolute;
     width: 500px; 
     height: 50px;
-    background: #000000;
+    background: #1a1919;
     border-radius: 5px;
 }
 
@@ -463,6 +468,7 @@ body{
     border: none;
     color: #FFFFFF;
     text-align: center;
+    outline: none;
     font-size: 20px;
     padding: 20px;
     width: 200px;
@@ -502,6 +508,7 @@ body{
     border-radius: 4px;
     background-color: #db1313;
     border: none;
+    outline: none;
     color: #FFFFFF;
     text-align: center;
     font-size: 20px;
@@ -614,4 +621,98 @@ th, td {
   
 ::-webkit-scrollbar-thumb:hover {
     background: #555; 
+}
+
+.menu {
+    position: absolute;
+    flex: auto;
+    z-index: 100;
+}
+
+.menu-style {
+    position: absolute;
+    height: 180px;
+    width: 100px;
+    background: rgba(255, 246, 246, 0.904);
+    left: 800px;
+    -webkit-box-shadow: 0px 2px 28px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 2px 28px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 2px 28px 0px rgba(0,0,0,0.75);
+}
+
+.minimenu-button {
+    position: absolute;
+    background: rgba(255, 246, 246, 0.904);
+    border: none;
+    top: 0px;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    right: 0px;
+    width: 100%;
+    height: 20px;
+    font-size: 14px;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+}
+
+.minimenu-button:hover {
+    background-color: #465252;
+}
+
+.minimenu-button-deleteall {
+    position: absolute;
+    background: rgba(255, 246, 246, 0.904);
+    border: none;
+    top: 20px;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    right: 0px;
+    width: 100%;
+    height: 20px;
+    font-size: 14px;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+}
+
+
+.minimenu-button-deleteall:hover {
+    background-color: #465252;
+}
+
+
+.minimenu-button-images {
+    position: absolute;
+    background: rgba(255, 246, 246, 0.904);
+    border: none;
+    top: 60px;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    right: 0px;
+    width: 100%;
+    height: 20px;
+    font-size: 14px;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+}
+
+.minimenu-button-images:hover {
+    background-color: #465252;
+}
+
+
+hr {
+    position: absolute;
+    top: 45px;
+    height: 1px;
+    right: 5%;
+    width: 90%;
+    border: none;
+    outline: none;
+    background-color: rgba(80, 79, 79, 0.582);
 }
