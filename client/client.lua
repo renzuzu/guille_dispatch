@@ -7,6 +7,7 @@ local PlayerData = {}
 local bigrambo = {}
 local nofilterquick = {}
 local wackyhijodeputa = {}
+local activated = true
 
 ESX = nil 
 
@@ -82,7 +83,7 @@ end)
 
 RegisterNetEvent("guille_dispatch:alertToClient")
 AddEventHandler("guille_dispatch:alertToClient", function(text, coords, id)
-    if PlayerData.job and PlayerData.job.name == 'police' then
+    if PlayerData.job and PlayerData.job.name == 'police' and activated then
         callnum = callnum + 1
         totalcalls = totalcalls + 1
         SendNUIMessage({
@@ -98,13 +99,15 @@ AddEventHandler("guille_dispatch:alertToClient", function(text, coords, id)
 end)
 
 RegisterNetEvent("guille_dispatch:vehToClient")
-AddEventHandler("guille_dispatch:vehToClient", function(text, coords, model, id)
-    if PlayerData.job and PlayerData.job.name == 'police' then
+AddEventHandler("guille_dispatch:vehToClient", function(coords, model, color, id)
+    if PlayerData.job and PlayerData.job.name == 'police' and activated then
         callnum = callnum + 1
         totalcalls = totalcalls + 1
+        local distanceToAlert = GetDistanceBetweenCoords(GetEntityCoords(PlayerPedId()), coords)
+        local finalDistanceTo = ESX.Math.Round(ESX.Math.Round(distanceToAlert, 1) * 0.001, 1)
         if Config.enableVehiclePics then
             SendNUIMessage({
-                content = text;
+                content = "Un hombre ha robado un vehiculo modelo " ..model.. " de color "..color..", he conseguido una foto del vehículo. Te encuentras a " ..finalDistanceTo .. " km de distancia";
                 callnum = callnum;
                 totalcalls = totalcalls;
                 pic = true;
@@ -112,7 +115,7 @@ AddEventHandler("guille_dispatch:vehToClient", function(text, coords, model, id)
                 newalert = true;
                 id = id;
             })
-            table.insert(calls, {text = text, coords = coords, model = model})
+            table.insert(calls, {text = "Un hombre ha robado un vehiculo modelo " ..model.. " de color "..color..", he conseguido una foto del vehículo. Te encuentras a " ..finalDistanceTo .. " km de distancia", coords = coords, model = model})
         else
             SendNUIMessage({
                 content = text;
@@ -121,7 +124,7 @@ AddEventHandler("guille_dispatch:vehToClient", function(text, coords, model, id)
                 newalert = true;
                 id = id;
             })
-            table.insert(calls, {text = text, coords = coords})
+            table.insert(calls, {text = "Un hombre ha robado un vehiculo modelo " ..model.. " de color "..color..", he conseguido una foto del vehículo. Te encuentras a " ..finalDistanceTo .. " km de distancia", coords = coords})
         end
     end
 end)
@@ -153,7 +156,7 @@ end, false)
 
 RegisterNetEvent("guille_dispatch:auxToClient")
 AddEventHandler("guille_dispatch:auxToClient", function(text, coords, id)
-    if PlayerData.job and PlayerData.job.name == 'ambulance' then
+    if PlayerData.job and PlayerData.job.name == 'ambulance' and activated then
         callnum = callnum + 1
         totalcalls = totalcalls + 1
         SendNUIMessage({
@@ -169,7 +172,7 @@ AddEventHandler("guille_dispatch:auxToClient", function(text, coords, id)
 end)
 RegisterNetEvent("guille_dispatch:taxiToClient")
 AddEventHandler("guille_dispatch:taxiToClient", function(text, coords, id)
-    if PlayerData.job and PlayerData.job.name == 'taxi' then
+    if PlayerData.job and PlayerData.job.name == 'taxi' and activated then
         callnum = callnum + 1
         totalcalls = totalcalls + 1
         SendNUIMessage({
@@ -187,7 +190,7 @@ end)
 
 RegisterNetEvent("guille_dispatch:mecaToClient")
 AddEventHandler("guille_dispatch:mecaToClient", function(text, coords, id)
-    if PlayerData.job and PlayerData.job.name == 'mechanic' then
+    if PlayerData.job and PlayerData.job.name == 'mechanic' and activated then
         callnum = callnum + 1
         totalcalls = totalcalls + 1
         SendNUIMessage({
@@ -205,7 +208,7 @@ end)
 
 RegisterNetEvent("guille_dispatch:robberyToClient")
 AddEventHandler("guille_dispatch:robberyToClient", function(type, coords, id)
-    if PlayerData.job and PlayerData.job.name == 'police' then
+    if PlayerData.job and PlayerData.job.name == 'police' and activated then
         print("hey")
         callnum = callnum + 1
         totalcalls = totalcalls + 1
@@ -351,8 +354,10 @@ RegisterCommand("forzar", function()
         local model = GetDisplayNameFromVehicleModel(GetEntityModel(vehicle))
         local coords = GetEntityCoords(PlayerPedId())
         local id = GetPlayerServerId(PlayerId())
-        local text = "Un hombre ha robado un vehiculo modelo " ..model.. ", he conseguido una foto del vehículo. Atrapad a ese tonto"
-        TriggerServerEvent("guille_dispatch:sendVehRob", text, coords, model, id)
+        local color = GetVehicleColor(vehicle)
+        local klk = tostring(color)
+        local finalColor = Config.Colors[klk]
+        TriggerServerEvent("guille_dispatch:sendVehRob", coords, model, finalColor, id)
     end
 end, false)
 
@@ -489,6 +494,16 @@ RegisterNUICallback("deletealerts", function()
         
     })
     ESX.ShowNotification('Todas las alertas han sido borradas')
+end)
+
+RegisterNUICallback("togglealerts", function()
+    if activated then
+        activated = false
+        ESX.ShowNotification('Las alertas han sido desactivadas')
+    else
+        activated = true
+        ESX.ShowNotification('Las notificaciones han sido activadas')
+    end
 end)
 
 function checkTable(table)

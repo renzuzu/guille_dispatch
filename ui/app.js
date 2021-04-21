@@ -200,6 +200,8 @@ $(function(){
         var $sup = $(".t-frame-sup-border");
         var $inf = $(".t-frame-inf-border");
         if (event.data.inConfig == true) {
+            var configmenu = document.getElementById("configmenu")
+            configmenu.style = "display:block"
             $sup.addClass('InConfig')
             $inf.addClass('InConfig')
             const element = document.getElementById("t-frame")
@@ -220,10 +222,12 @@ $(function(){
         selected = $(this).index();
         const ele = document.getElementById('menu');
         const menu = document.getElementById('menu');
+        menu.style = "display:block;"
         document.addEventListener('click', contextmenu);
         function contextmenu(e) {
             if (e.target.id == "table-container" || $(e.target).parents("#table-container").length) {
                 if (e.target.id == "menu" || $(e.target).parents("#menu").length) { // Quick edit
+                    
                 }
                 else {
                     e.preventDefault();
@@ -239,7 +243,10 @@ $(function(){
                     $(".menu-style").css("top", y + "px");
     
                 }
-            }   
+            } 
+            else {
+                menu.style = "display:none;"
+            }
 
         };
     });
@@ -250,6 +257,10 @@ document.addEventListener("DOMContentLoaded", () => {
     $("#text").html("Sin llamadas recibidas");
     var selector = document.getElementById("all")
     selector.style = "display:none;"
+    var contextmenu = document.getElementById("menu")
+    contextmenu.style = "display:none;"
+    var configmenu = document.getElementById("configmenu")
+    configmenu.style = "display:none"
 });
 
 document.addEventListener('keypress', logKey);
@@ -263,9 +274,10 @@ function logKey(e) {
         cust.remove();
         $sup.removeClass('InConfig')
         $inf.removeClass('InConfig')
-        alerts.forEach((element) => {
-            
-        });
+        var configmenu = document.getElementById("configmenu")
+        configmenu.style = "display:none"
+        var contextmenu = document.getElementById("menu")
+        contextmenu.style = "display:none"
         $.post(`http:/${GetParentResourceName()}/exit`, JSON.stringify({}));
     }
 }
@@ -334,6 +346,7 @@ $(function() {
     document.getElementById("images-button").addEventListener("click", tooglepics);
     document.getElementById("delete-button").addEventListener("click", deletealerts);
     document.getElementById("minimenu-button").addEventListener("click", deletealert);
+    document.getElementById("togglealerts-button").addEventListener("click", togglealerts)
     function tooglepics() {
         $.post(`http:/${GetParentResourceName()}/tooglepic`, JSON.stringify({}));
     }
@@ -343,5 +356,8 @@ $(function() {
     function deletealert() {
         console.log(selected);
         $("tr").eq(selected).remove();
+    }
+    function togglealerts() {
+        $.post(`http:/${GetParentResourceName()}/togglealerts`, JSON.stringify({}));
     }
 });

@@ -18,8 +18,8 @@ AddEventHandler("guille_dispatch:sendMecaAlert", function(text, coords, id)
 end)
 
 RegisterServerEvent("guille_dispatch:sendVehRob")
-AddEventHandler("guille_dispatch:sendVehRob", function(text, coords, model, id)
-    TriggerClientEvent("guille_dispatch:vehToClient", -1, text, coords, model, id)
+AddEventHandler("guille_dispatch:sendVehRob", function(coords, model, color, id)
+    TriggerClientEvent("guille_dispatch:vehToClient", -1, coords, model, color, id)
 end)
 
 RegisterServerEvent("guille_dispatch:sendTaxiaAlert")
