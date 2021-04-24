@@ -23,7 +23,7 @@ To translate the script just edit the strings from client, index.html and js.
 local pedcoords = GetEntityCoords(PlayerPedId())
 local id = GetPlayerServerId(PlayerId())
 TriggerServerEvent("guille_dispatch:sendRobaAlert", "247", pedcoords, id)
-                                                the rob name
+                                             (the rob name where 247)
 ```
 
 By default the photos are taken from a website, but if you want to do the photos localy just do this:
