@@ -26,6 +26,7 @@ files {
     'ui/vehicles/*.png',
     --'ui/vehicles/*.webp',
     'ui/*.css',
+    'ui/*.svg',
     'ui/*.png',
     'ui/*.ttf'
     

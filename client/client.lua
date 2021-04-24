@@ -33,8 +33,10 @@ AddEventHandler('esx:setJob', function(job)
         content = "Sin alertas";
         callnum = 0;
         totalcalls = 0;
+        closeConfigMenu = true;
         newalert = false;
     })
+    SetNuiFocus(false, false)
     showed = false
 end)
 
@@ -42,7 +44,7 @@ RegisterCommand("showalerts", function()
     if PlayerData.job and PlayerData.job.name == 'police' or PlayerData.job.name == 'ambulance' or PlayerData.job.name == 'mechanic' or PlayerData.job.name == 'taxi' then
         if not showed then
             if checkTable(calls) then
-                if calls[callnum]['model'] then
+                if calls[callnum]['model'] ~= nil then
                     SendNUIMessage({
                         show = true;
                         pic = true;
@@ -118,7 +120,7 @@ AddEventHandler("guille_dispatch:vehToClient", function(coords, model, color, id
             table.insert(calls, {text = "Un hombre ha robado un vehiculo modelo " ..model.. " de color "..color..", he conseguido una foto del vehículo. Te encuentras a " ..finalDistanceTo .. " km de distancia", coords = coords, model = model})
         else
             SendNUIMessage({
-                content = text;
+                content = "Un hombre ha robado un vehiculo modelo " ..model.. " de color "..color..", he conseguido una foto del vehículo. Te encuentras a " ..finalDistanceTo .. " km de distancia";
                 callnum = callnum;
                 totalcalls = totalcalls;
                 newalert = true;
@@ -164,6 +166,7 @@ AddEventHandler("guille_dispatch:auxToClient", function(text, coords, id)
             callnum = callnum;
             totalcalls = totalcalls;
             newambualert = true;
+            newalert = true;
             id = id;
         })
         table.insert(calls, {text = text, coords = coords})
@@ -180,6 +183,7 @@ AddEventHandler("guille_dispatch:taxiToClient", function(text, coords, id)
             callnum = callnum;
             totalcalls = totalcalls;
             newtaxialert = true;
+            newalert = true;
             id = id;
         })
         table.insert(calls, {text = text, coords = coords})
@@ -198,6 +202,7 @@ AddEventHandler("guille_dispatch:mecaToClient", function(text, coords, id)
             callnum = callnum;
             totalcalls = totalcalls;
             newmecaalert = true;
+            newalert = true;
             id = id;
         })
         table.insert(calls, {text = text, coords = coords})
@@ -432,30 +437,31 @@ RegisterCommand("acceptentorno", function(source, args)
     end
 end, false)
 
-RegisterKeyMapping("mover", ("tus muertos"), 'keyboard', 'i')
+RegisterKeyMapping("mover", ("Configuración"), 'keyboard', 'i')
 
-RegisterKeyMapping("right", ("tus muertos"), 'keyboard', 'right')
+RegisterKeyMapping("right", ("Mover entorno a la derecha"), 'keyboard', 'right')
 
-RegisterKeyMapping("left", ("tus muertos"), 'keyboard', 'left')
+RegisterKeyMapping("left", ("Mover entorno a la izquierda"), 'keyboard', 'left')
 
-RegisterKeyMapping("showalerts", ("tus muertos"), 'keyboard', 'f4')
+RegisterKeyMapping("showalerts", ("Abrir el dispatch"), 'keyboard', 'f4')
 
-RegisterKeyMapping("acceptentorno", ("tus muertos"), 'keyboard', 'o')
+RegisterKeyMapping("acceptentorno", ("Marcar el entorno"), 'keyboard', 'o')
 
 RegisterNUICallback("exit", function()
     SetNuiFocus(false, false)
     if checkTable(calls) then
-        if calls[callnum]['model'] ~= nil then
+        if calls[callnum]['model'] == nil then
+            SendNUIMessage({
+                content = calls[callnum]['text'];
+                callnum = num;
+            })
+        else
+
             SendNUIMessage({
                 content = calls[callnum]['text'];
                 callnum = num;
                 pic = true;
                 model = calls[callnum]['model'];
-            })
-        else
-            SendNUIMessage({
-                content = calls[callnum]['text'];
-                callnum = num;
             })
         end
     else
@@ -503,6 +509,69 @@ RegisterNUICallback("togglealerts", function()
     else
         activated = true
         ESX.ShowNotification('Las notificaciones han sido activadas')
+    end
+end)
+
+RegisterNUICallback("deletealert", function(cb)
+    totalcalls = totalcalls - 1
+    
+    print("removed one "  ..cb.selectedId + 1)
+    print(callnum)
+    if (cb.selectedId + 1) == callnum then
+        if checkTable(calls) then
+            if calls[callnum]['model'] ~= nil then
+                SendNUIMessage({
+                    content = calls[callnum]['text'];
+                    callnum = num;
+                    totalcalls = totalcalls;
+                    pic = true;
+                    model = calls[callnum]['model'];
+                })
+                
+            else
+                if calls[callnum + 1] ~= nil then
+                    print("hola1")
+                    SendNUIMessage({
+                        content = calls[callnum + 1]['text'];
+                        callnum = num;
+                        totalcalls = totalcalls;
+                    })
+                    callnum = callnum + 1
+                elseif calls[callnum - 1] ~= nil then
+                    print("hola2")
+                    local num = callnum - 1
+                    SendNUIMessage({
+                        content = calls[callnum - 1]['text'];
+                        callnum = num;
+                        totalcalls = totalcalls;
+                    })
+                    callnum = callnum - 1
+                else
+
+                    callnum = 0
+                    totalcalls = 0
+                    calls = {}
+                    SendNUIMessage({
+                        content = "Sin entornos registrados";
+                        restart = true;
+                        newalert = false;
+                        
+                    })
+                end
+            end
+        end
+    else
+        callnum = callnum - 1
+        print("al tiro")
+        SendNUIMessage({
+            callnum = callnum;
+            totalcalls = totalcalls;
+        })
+    end
+    table.remove(calls, cb.selectedId + 1)
+    
+    for k,v in pairs(calls) do
+        print(k)
     end
 end)
 

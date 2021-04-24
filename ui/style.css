@@ -19,6 +19,14 @@ body{
     -o-user-select: none;
 }
 
+.origen-logo {
+    position: absolute;
+    height: 140px;
+    left: 76px;
+    opacity: 0.2;
+    width: auto;
+}
+
 .t-frame {
     position: absolute;
     width: 300px;
@@ -26,10 +34,12 @@ body{
     height: auto; 
     background: #1c1d1dd3;
     z-index: -2;
+    border-radius: 10px;
 }
 
 .t-frame-grey {
     position: absolute;
+    
     width:280px;
     border-radius: 20px;
     height:195px;
@@ -150,7 +160,7 @@ body{
     font-size: 18px;
     width: 200px;
     color: rgb(241, 243, 245);
-    padding-top: 18px;
+    padding-top: 13px;
     padding-left: 75px;
 }
 
@@ -158,7 +168,8 @@ body{
     position: absolute;
     width: 300px; 
     height: 25px;
-    background: #313030;
+    background: #000000;
+    border-radius: 10px;
     z-index: -2;
 }
 
@@ -184,7 +195,8 @@ body{
     margin-top: 130px;
     width: 300px; 
     height: 25px;
-    background: #313030;
+    background: #000000;
+    border-radius: 10px;
     z-index: -2;
 }
 
@@ -205,13 +217,13 @@ body{
 .t-frame-grey-content {
     font-family: franklin;
     position: absolute;
-    font-size: 12px;
+    font-size: 13px;
     width: 270px;
     color: rgb(241, 243, 245);
-    padding-top: 48px;
+    padding-top: 42px;
     padding-left: 15px;
     text-overflow: ellipsis;
-    text-align: justify;
+    text-align: center;
 }
 
 .callnum {
@@ -261,8 +273,8 @@ body{
     width: 290px;
     color: rgb(255, 255, 255);
     opacity: 0.8;
-    padding-top: 6px;
-    padding-left: 110px; 
+    padding-top: 0px;
+    padding-left: 60px; 
     z-index: 1;
 }
 
@@ -439,15 +451,15 @@ body{
     height: 600px; 
     background: #313030ec;
     z-index: -2;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .tmenu-top-border {
     position: absolute;
     width: 500px; 
     height: 50px;
-    background: #1a1919;
-    border-radius: 5px;
+    background: #000000;
+    border-radius: 10px;
 }
 
 .menu-titlename {
@@ -576,7 +588,7 @@ th, td {
     z-index: 4;
     font-family: franklin;
     height: 100px;
-    border-radius: 3px;
+    border-radius: 5px;
 }
 
 /*tabla*/
@@ -586,7 +598,7 @@ th, td {
     height: 100px;
     margin-top: -25px;
     font-family: franklin;
-    margin-left: 30px;
+    margin-left: 40px;
 }
 
 .content-table-text {
@@ -602,8 +614,9 @@ th, td {
 .table-code {
     position: absolute;
     z-index: 3;
+    font-size: 20px;
     font-display: center;
-    left: 200px;
+    left: 181px;
     margin-top: -100px;
     font-family: franklin;
 }
@@ -632,7 +645,7 @@ th, td {
 
 .menu-style {
     position: absolute;
-    height: 180px;
+    height: 105px;
     width: 100px;
     background: rgba(255, 246, 246, 0.904);
     left: 800px;
@@ -709,7 +722,7 @@ th, td {
 
 hr {
     position: absolute;
-    top: 45px;
+    top: 42px;
     height: 1px;
     right: 5%;
     width: 90%;

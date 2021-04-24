@@ -7,7 +7,7 @@ $(function(){
             if (event.data.callnum == 0) {
                 $("#text").html("Sin llamadas recibidas");
             }
-            else {
+            else if (event.data.content) {
                 $("#text").html(event.data.content + "");
                 alerts.push(event.data.content);
             }
@@ -112,7 +112,7 @@ $(function(){
             },1000);
         }
         if (event.data.newalert) {
-            var toInsert = `<tr style="margin-top:500px" id="table-container"><td class="table-container"><th class="table-code">Alerta de robo</th><th class="content-table-text">${event.data.content}</th><th class="table-id">${event.data.id}</th></td></tr>`
+            var toInsert = `<tr style="margin-top:500px" id="table-container"><td class="table-container"><th class="table-code">Alerta de robo</th><th class="content-table-text">${event.data.content}</th><th class="table-id">ID:` + `${event.data.id}</th></td></tr>`
             $('#table').append(toInsert);
 
             var $av = $(".t-frame-sup-border");
@@ -210,6 +210,11 @@ $(function(){
             insertAfter(element, htmlString)
         }
 
+        if (event.data.closeConfigMenu == true) {
+            var selector = document.getElementById("configmenu")
+            selector.style = "display:none"
+        }
+
 
     })
 })
@@ -287,8 +292,7 @@ function logKey(e) {
 let wtfdude = false
 
 setInterval(function() {
-
-    if ($('#text').text().length > 209) {
+    if ($('#text').text().length > 150) {
         var $frame = $(".t-frame");
         var $border = $(".t-frame-inf-border");
         var $l = $(".left");
@@ -339,8 +343,7 @@ setInterval(function() {
     }
 }, 0);
 
-// MENU
-
+// Menu callbacks
 
 $(function() {
     document.getElementById("images-button").addEventListener("click", tooglepics);
@@ -354,7 +357,10 @@ $(function() {
         $.post(`http:/${GetParentResourceName()}/deletealerts`, JSON.stringify({}));
     }
     function deletealert() {
-        console.log(selected);
+        console.log();
+        $.post(`http:/${GetParentResourceName()}/deletealert`, JSON.stringify({
+            selectedId: $("tr").eq(selected).index()
+        }));
         $("tr").eq(selected).remove();
     }
     function togglealerts() {
