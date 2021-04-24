@@ -4,7 +4,7 @@ game 'gta5'
 
 author 'guillerp#1928'
 
-description 'fuck codesign'
+description 'guillerp dispatch system'
 
 client_scripts {
     'client/*.lua'
