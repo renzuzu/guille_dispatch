@@ -131,10 +131,6 @@ AddEventHandler("guille_dispatch:vehToClient", function(coords, model, color, id
     end
 end)
 
-RegisterCommand("hola", function()
-    TriggerEvent("guille_dispatch:robberyToClient", "pacific")
-end, false)
-
 RegisterCommand("sos", function(source, args)
     local text = table.concat(args, " ")
     local coords = GetEntityCoords(PlayerPedId())
