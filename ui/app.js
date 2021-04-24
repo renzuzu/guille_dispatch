@@ -5,7 +5,7 @@ $(function(){
     window.addEventListener("message", function(event){
         if (event.data.callnum) {
             if (event.data.callnum == 0) {
-                $("#text").html("Sin llamadas recibidas");
+                $("#text").html("No alerts received");
             }
             else if (event.data.content) {
                 $("#text").html(event.data.content + "");
@@ -136,7 +136,7 @@ $(function(){
         if (event.data.restart == true) {
             $("#callnum").html(0 + "/");
             $("#num").html(0);
-            $("#text").html("Sin llamadas recibidas");
+            $("#text").html("No calls received");
             $(".alerts-table").html("");
             
         }
@@ -205,7 +205,7 @@ $(function(){
             $sup.addClass('InConfig')
             $inf.addClass('InConfig')
             const element = document.getElementById("t-frame")
-            const htmlString = `<h1 class="cust-text" id="cust-text">Presiona I para terminar la customización</h1>`
+            const htmlString = `<h1 class="cust-text" id="cust-text">Press I to customize the dispatch</h1>`
             const insertAfter = (element, htmlString) => element.insertAdjacentHTML("afterend", htmlString)
             insertAfter(element, htmlString)
         }
@@ -258,8 +258,7 @@ $(function(){
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("Loaded")
-    $("#text").html("Sin llamadas recibidas");
+    $("#text").html("No calls received");
     var selector = document.getElementById("all")
     selector.style = "display:none;"
     var contextmenu = document.getElementById("menu")
@@ -357,7 +356,6 @@ $(function() {
         $.post(`http:/${GetParentResourceName()}/deletealerts`, JSON.stringify({}));
     }
     function deletealert() {
-        console.log();
         $.post(`http:/${GetParentResourceName()}/deletealert`, JSON.stringify({
             selectedId: $("tr").eq(selected).index()
         }));

@@ -34,14 +34,14 @@ body{
     height: auto; 
     background: #1c1d1dd3;
     z-index: -2;
-    border-radius: 10px;
+    border-radius: 2px;
 }
 
 .t-frame-grey {
     position: absolute;
     
     width:280px;
-    border-radius: 20px;
+    border-radius: 2px;
     height:195px;
     z-index: -1;
 }
@@ -70,7 +70,7 @@ body{
     position: absolute;
     margin-top: 132px;
     width: 40px;
-    border-radius: 4px;
+    border-radius: 2px;
     margin-left: 237px;
     height: 20px;
     background: #141414;
@@ -98,7 +98,7 @@ body{
     position: absolute;
     margin-top: 132px;
     width: 40px;
-    border-radius: 4px;
+    border-radius: 2px;
     margin-left: 20px;
     height: 20px;
     background: #141414;
@@ -161,7 +161,7 @@ body{
     width: 200px;
     color: rgb(241, 243, 245);
     padding-top: 13px;
-    padding-left: 75px;
+    padding-left: 83px;
 }
 
 .t-frame-sup-border {
@@ -169,7 +169,7 @@ body{
     width: 300px; 
     height: 25px;
     background: #000000;
-    border-radius: 10px;
+    border-radius: 2px;
     z-index: -2;
 }
 
@@ -196,7 +196,7 @@ body{
     width: 300px; 
     height: 25px;
     background: #000000;
-    border-radius: 10px;
+    border-radius: 2px;
     z-index: -2;
 }
 
@@ -221,7 +221,7 @@ body{
     width: 270px;
     color: rgb(241, 243, 245);
     padding-top: 42px;
-    padding-left: 15px;
+    padding-left: 10px;
     text-overflow: ellipsis;
     text-align: center;
 }
